@@ -31,7 +31,7 @@ class App:
         self.__TimeandWeather["justify"] = "right"
         self.__TimeandWeather["text"] = current_date
         self.__TimeandWeather.place(x=350, y=50, width=170, height=25)
-
+# %% lable time
         self.__TimeandWeather = tk.Label(root)
         ft = tkFont.Font(family='Times', size=11)
         self.__TimeandWeather["font"] = ft
@@ -41,6 +41,7 @@ class App:
         self.__TimeandWeather.place(x=290, y=70, width=170, height=25)
 
 
+# %% call
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
