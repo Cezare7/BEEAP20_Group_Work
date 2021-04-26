@@ -24,21 +24,21 @@ class App:
         t = time.localtime()
         current_date = time.strftime("%A %d %B %Y", t)
         current_time = time.strftime("%H:%M", t)
-        self.__TimeandWeather = tk.Label(root)
+        self.__Time = tk.Label(root)
         ft = tkFont.Font(family='Times', size=11)
-        self.__TimeandWeather["font"] = ft
-        self.__TimeandWeather["fg"] = "#333333"
-        self.__TimeandWeather["justify"] = "right"
-        self.__TimeandWeather["text"] = current_date
-        self.__TimeandWeather.place(x=350, y=50, width=170, height=25)
+        self.__Time["font"] = ft
+        self.__Time["fg"] = "#333333"
+        self.__Time["justify"] = "right"
+        self.__Time["text"] = current_date
+        self.__Time.place(x=350, y=50, width=170, height=25)
 # %% lable time
-        self.__TimeandWeather = tk.Label(root)
+        self.__Time = tk.Label(root)
         ft = tkFont.Font(family='Times', size=11)
-        self.__TimeandWeather["font"] = ft
-        self.__TimeandWeather["fg"] = "#333333"
-        self.__TimeandWeather["justify"] = "right"
-        self.__TimeandWeather["text"] = current_time
-        self.__TimeandWeather.place(x=290, y=70, width=170, height=25)
+        self.__Time["font"] = ft
+        self.__Time["fg"] = "#333333"
+        self.__Time["justify"] = "right"
+        self.__Time["text"] = current_time
+        self.__Time.place(x=350, y=70, width=170, height=25)
 
 
 # %% call
