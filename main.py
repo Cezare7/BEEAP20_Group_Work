@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import *
+from tkinter import ttk, Menu
 from tkinter import filedialog as fd
 import tkinter.messagebox as tkBox
 import tkinter.font as tkFont
@@ -20,6 +21,17 @@ class App:
                                     (screenheight - height) / 2)
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
+
+        self.mainmenu = Menu(root)
+
+        self.filemenu = Menu(self.mainmenu, tearoff=0)
+        self.filemenu.add_command(label="Open")
+        self.filemenu.add_command(label="Save")
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=root.destroy)
+        self.mainmenu.add_cascade(label="File", menu=self.filemenu)
+
+        root.config(menu=self.mainmenu)
 # %% Lable date
         t = time.localtime()
         current_date = time.strftime("%A %d %B %Y", t)
