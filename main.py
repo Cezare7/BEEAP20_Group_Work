@@ -23,6 +23,7 @@ class App:
         root.resizable(width=False, height=False)
 
 # %% Drop down mainmenu
+
         self.mainmenu = Menu(root)
 
         self.filemenu = Menu(self.mainmenu, tearoff=0)
@@ -35,6 +36,7 @@ class App:
         root.config(menu=self.mainmenu)
 
 # %% Lable date
+
         t = time.localtime()
         current_date = time.strftime("%A %d %B %Y", t)
         current_time = time.strftime("%H:%M", t)
@@ -45,14 +47,16 @@ class App:
         self.__Time["justify"] = "left"
         self.__Time["text"] = current_date
         self.__Time.place(x=350, y=50, width=170, height=25)
+
 # %% lable time
+
         self.__Time = tk.Label(root)
         ft = tkFont.Font(family='Times', size=11)
         self.__Time["font"] = ft
         self.__Time["fg"] = "#333333"
-        self.__Time["justify"] = "left"
+        self.__Time["justify"] = "right"
         self.__Time["text"] = current_time
-        self.__Time.place(x=300, y=70, width=170, height=25)
+        self.__Time.place(x=350, y=70, width=170, height=25)
 
 
 # %% call
