@@ -4,7 +4,6 @@ Created on Mon Apr 26 12:24:50 2021
 
 @author: Beni Fucking Demoa
 """
-import tkinter as tk
 import tkinter.messagebox as tkBox
 from tkinter import Tk, Frame, Entry, Button, Toplevel, Label
 
@@ -94,7 +93,6 @@ def Log_in():
 
 
 root = Tk()
-root.geometry("200x150")
 root.title('Log in')
 width = 300
 height = 150
@@ -107,14 +105,14 @@ root.resizable(width=False, height=False)
 frame = Frame(root)
 frame.pack()
 
-lUsername = tk.Label(frame, text="Username")
+lUsername = Label(frame, text="Username")
 lUsername.pack(padx=2, pady=0)
 
 Username = Entry(frame, width=20)
 Username.insert(0, "")
 Username.pack(padx=5, pady=5)
 
-lPassword = tk.Label(frame, text="Password")
+lPassword = Label(frame, text="Password")
 lPassword.pack(padx=2, pady=0)
 
 Password = Entry(frame, width=15, show="*")
