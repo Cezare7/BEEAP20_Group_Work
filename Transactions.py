@@ -3,13 +3,25 @@ Created on Tue May 11 10:00:50 2021
 
 @author: Beni Fucking Demoa
 """
-from tkinter import *
+
 from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk
 from tkcalendar import DateEntry
 
 
 def Expense():
+    
+    def Submit():
+        
+        EnteredExpense = float((ExpenseEntry.get()))
 
+        if isinstance(EnteredExpense,(int, float)):
+            if EnteredExpense >= 0:
+                print("yes")
+        else:
+            print(EnteredExpense, "no")
+        
+     
+        
     Expensewindow = Toplevel()
     width = 300
     height = 180
@@ -21,8 +33,6 @@ def Expense():
     Expensewindow.resizable(width=False, height=False)
     Expensewindow.title("Add Expense")
 
-
-
     TransactionTypes = ['Rent',  'Travel', 'Groceries', 'Subscriptions',
                         'Guilty Pleasure']
     CategorySelection = ttk.Combobox(Expensewindow, values=TransactionTypes,
@@ -33,14 +43,14 @@ def Expense():
     ExpenseEntry = Entry(Expensewindow, width=23, justify="center")
     ExpenseEntry.insert(0, "Amount")
     ExpenseEntry.pack(padx=5, pady=15)
-    
+
     Ecal = DateEntry(Expensewindow, width=20, background='darkblue',
                      foreground='white', borderwidth=2,
                      date_pattern='dd-mm-yyyy', justify="center")
     Ecal.pack(padx=5, pady=5)
-    
+
     ESubmitButton = Button(Expensewindow, width=20, text="Submit",
-                           command=Expensewindow.destroy)
+                           command=Submit)
     ESubmitButton.pack(padx=5, pady=15)
 
 
@@ -75,7 +85,6 @@ def Income():
     ISubmitButton = Button(Incomewindow, width=20, text="Submit",
                            command=Incomewindow.destroy)
     ISubmitButton.pack(padx=5, pady=5)
-
 
 
 root = Tk()
