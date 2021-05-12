@@ -31,8 +31,8 @@ def Sign_up():
     window = Toplevel()
     width = 300
     height = 250
-    screenwidth = root.winfo_screenwidth()
-    screenheight = root.winfo_screenheight()
+    screenwidth = window.winfo_screenwidth()
+    screenheight = window.winfo_screenheight()
     alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
                                 (screenheight - height) / 2)
     window.geometry(alignstr)
@@ -83,7 +83,7 @@ def Log_in():
 
         if Entered_Password == (Passwords[Username_Index]):
             tkBox.showinfo('Welcome', "Welcome!")
-            root.destroy()
+            LogInWindow.destroy()
         else:
             tkBox.showinfo('Access denied',
                            'Incorrect password or username')
@@ -92,17 +92,17 @@ def Log_in():
                        'Incorrect password or username')
 
 
-root = Tk()
-root.title('Log in')
+LogInWindow = Tk()
+LogInWindow.title('Log in')
 width = 300
 height = 150
-screenwidth = root.winfo_screenwidth()
-screenheight = root.winfo_screenheight()
+screenwidth = LogInWindow.winfo_screenwidth()
+screenheight = LogInWindow.winfo_screenheight()
 alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
                             (screenheight - height) / 2)
-root.geometry(alignstr)
-root.resizable(width=False, height=False)
-frame = Frame(root)
+LogInWindow.geometry(alignstr)
+LogInWindow.resizable(width=False, height=False)
+frame = Frame(LogInWindow)
 frame.pack()
 
 lUsername = Label(frame, text="Username")
@@ -129,4 +129,4 @@ Usernames = ["Jack", "Benjamin", "123"]
 Passwords = ["Enter", "Qwerty", "123"]
 Weathers = ["Valkeakoski"]
 
-root.mainloop()
+LogInWindow.mainloop()

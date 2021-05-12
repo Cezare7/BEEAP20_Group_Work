@@ -14,10 +14,10 @@ def Expense():  # Input expense and submit it to the csv file
     def Submit():  # Fuction that saves the inputed data in csv file
 
         EnteredExpense = float((ExpenseEntry.get()))
-
+        EnteredDate = (Ecal.get())
         if isinstance(EnteredExpense, (int, float)):
             if EnteredExpense >= 0:
-                print("yes")
+                print("yes", EnteredDate)
         else:
             print(EnteredExpense, "no")
 # %% Expense window properties
