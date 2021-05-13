@@ -12,7 +12,7 @@ import pandas as pd
 # %% Expense button command
 def Expense():  # Input expense and submit it to the csv file
     # %% Submit command
-    def Submit():  # Fuction that saves the inputed data in csv file
+    def Submit_Expense():  # Fuction that saves the inputed data in csv file
 
         # Get imput data from user
         EnteredDate = (Ecal.get())
@@ -21,15 +21,17 @@ def Expense():  # Input expense and submit it to the csv file
 
         #  import CSV file to dataframe
         Tdf = pd.read_csv('Transactions.csv')
+        #Tdf = Tdf.fillna(0)
         DateTdf = Tdf[Tdf['Date'] == EnteredDate]
         DateTdf = DateTdf[EnteredCategory]
-
+        print(Tdf)
         #  Make transaction if all fields is filled correctly
         if isinstance(EnteredExpense, (int, float)):
             if EnteredExpense >= 0:
                 DateTdf = DateTdf + (EnteredExpense * -1)
                 Tdf.update(DateTdf)
-                Tdf.to_csv('Transactions.csv')
+                print(Tdf)
+                Tdf.to_csv('Transactions.csv', index=False)
                 Expensewindow.destroy()
         else:
             print("no")
@@ -67,13 +69,38 @@ def Expense():  # Input expense and submit it to the csv file
 
 # %% Button for submiting value
     ESubmitButton = Button(Expensewindow, width=20, text="Submit",
-                           command=Submit)
+                           command=Submit_Expense)
     ESubmitButton.pack(padx=5, pady=15)
 
 
 # %% income command
 def Income():  # Function for Income button command
 
+    def Submit_Income():  # Fuction that saves the inputed data in csv file
+
+        # Get imput data from user
+        EnteredDate = (Ical.get())
+        EnteredIncome = float((IncomeEntry.get()))
+        EnteredCategory = CategorySelection.get()
+
+        #  import CSV file to dataframe
+        Tdf = pd.read_csv('Transactions.csv')
+        Tdf = Tdf.fillna(0)
+        print(Tdf)
+        IncomeTdf = Tdf[Tdf['Date'] == EnteredDate]
+        IncomeTdf = IncomeTdf[EnteredCategory]
+
+        #  Make transaction if all fields is filled correctly
+        if isinstance(EnteredIncome, (int, float)):
+            if EnteredIncome >= 0:
+                IncomeTdf = IncomeTdf + EnteredIncome
+                Tdf.update(IncomeTdf)
+                print(Tdf)
+                Tdf.to_csv('Transactions.csv', index=False)
+                Incomewindow.destroy()
+
+        else:
+            print("no")
     # %% Income window properties
     Incomewindow = Toplevel()
     width = 300
@@ -86,7 +113,7 @@ def Income():  # Function for Income button command
     Incomewindow.resizable(width=False, height=False)
     Incomewindow.title("Add Income")
 
-    IncomeTypes = ['Rent',  'Salery', 'Sponsors', 'Other bussiness']
+    IncomeTypes = ['Rent',  'Salery', 'Sponsor', 'Other bussiness']
 
 # %% Combo box for selecting transission type
     CategorySelection = ttk.Combobox(Incomewindow, values=IncomeTypes,
@@ -102,12 +129,12 @@ def Income():  # Function for Income button command
 # %% Date Selection Tool
     Ical = DateEntry(Incomewindow, width=20, background='darkblue',
                      foreground='white', borderwidth=2,
-                     date_pattern='dd-mm-yyyy', justify="center")
+                     date_pattern='d.m.yyyy', justify="center")
     Ical.pack(padx=5, pady=5)
 
 # %% Button for submiting value
     ISubmitButton = Button(Incomewindow, width=20, text="Submit",
-                           command=Incomewindow.destroy)
+                           command=Submit_Income)
     ISubmitButton.pack(padx=5, pady=5)
 
 
