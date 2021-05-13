@@ -6,6 +6,7 @@ Created on Tue May 11 10:00:50 2021
 
 from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk
 from tkcalendar import DateEntry
+import pandas as pd
 
 
 # %% Expense button command
@@ -13,13 +14,25 @@ def Expense():  # Input expense and submit it to the csv file
     # %% Submit command
     def Submit():  # Fuction that saves the inputed data in csv file
 
-        EnteredExpense = float((ExpenseEntry.get()))
+        # Get imput data from user
         EnteredDate = (Ecal.get())
+        EnteredExpense = float((ExpenseEntry.get()))
+        EnteredCategory = CategorySelection.get()
+
+        #  import CSV file to dataframe
+        Tdf = pd.read_csv('Transactions.csv')
+        DateTdf = Tdf[Tdf['Date'] == EnteredDate]
+        DateTdf = DateTdf[EnteredCategory]
+
+        #  Make transaction if all fields is filled correctly
         if isinstance(EnteredExpense, (int, float)):
             if EnteredExpense >= 0:
-                print("yes", EnteredDate)
+                DateTdf = DateTdf + (EnteredExpense * -1)
+                Tdf.update(DateTdf)
+                Tdf.to_csv('Transactions.csv')
+                Expensewindow.destroy()
         else:
-            print(EnteredExpense, "no")
+            print("no")
 # %% Expense window properties
     Expensewindow = Toplevel()  # Window properties
     width = 300
@@ -49,7 +62,7 @@ def Expense():  # Input expense and submit it to the csv file
 # %% Date Selection Tool
     Ecal = DateEntry(Expensewindow, width=20, background='darkblue',
                      foreground='white', borderwidth=2,
-                     date_pattern='dd-mm-yyyy', justify="center")
+                     date_pattern='d.m.yyyy', justify="center")
     Ecal.pack(padx=5, pady=5)
 
 # %% Button for submiting value
