@@ -12,15 +12,19 @@ import calendar as calendar
 import time            
 
 
+#create a tk window to show the date and time 
 window = tk.Tk()
 window.geometry("300x350")
 window.title("calendar") 
+
+# create a 24hr digital clock face
 def update_clock():
     hours = time.strftime('%H')
     minutes = time.strftime('%M')
+    am_or_pm = time.strftime('%p') 
     time_text = hours + ':' + minutes 
     digital_clock_lbl.config(text=time_text)
-    digital_clock_lbl.after(1000, update_clock)
+    digital_clock_lbl.after(1000, update_clock)# update the time every second
 digital_clock_lbl = tk.Label(window, text='00:00',
                              font='Helvetica 30 bold')
 digital_clock_lbl.pack()
@@ -28,8 +32,10 @@ digital_clock_lbl.pack()
 
 update_clock()
 
+# create a calendar and place in window
 mycal = tkcal.Calendar(window, setmode='day', date_pattern='d/m/yy')
 mycal.pack(padx=10, pady=1)
 
  
 window.mainloop()
+#https://www.youtube.com/watch?v=cd4bApAhEIM
