@@ -6,6 +6,7 @@ Created on Mon Apr 26 12:24:50 2021
 """
 import tkinter.messagebox as tkBox
 from tkinter import Tk, Frame, Entry, Button, Toplevel, Label
+from Transactions import StartWindow 
 
 
 def Sign_up():
@@ -84,6 +85,7 @@ def Log_in():
         if Entered_Password == (Passwords[Username_Index]):
             tkBox.showinfo('Welcome', "Welcome!")
             LogInWindow.destroy()
+            StartWindow()
         else:
             tkBox.showinfo('Access denied',
                            'Incorrect password or username')

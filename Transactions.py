@@ -19,18 +19,17 @@ def Expense():  # Input expense and submit it to the csv file
         EnteredExpense = float((ExpenseEntry.get()))
         EnteredCategory = CategorySelection.get()
 
-        #  import CSV file to dataframe
+#  import CSV file to dataframe
         Tdf = pd.read_csv('Transactions.csv')
-        #Tdf = Tdf.fillna(0)
+        #  Tdf = Tdf.fillna(0)
         DateTdf = Tdf[Tdf['Date'] == EnteredDate]
         DateTdf = DateTdf[EnteredCategory]
-        print(Tdf)
-        #  Make transaction if all fields is filled correctly
+
+#  Make transaction if all fields is filled correctly
         if isinstance(EnteredExpense, (int, float)):
             if EnteredExpense >= 0:
                 DateTdf = DateTdf + (EnteredExpense * -1)
                 Tdf.update(DateTdf)
-                print(Tdf)
                 Tdf.to_csv('Transactions.csv', index=False)
                 Expensewindow.destroy()
         else:
@@ -39,8 +38,8 @@ def Expense():  # Input expense and submit it to the csv file
     Expensewindow = Toplevel()  # Window properties
     width = 300
     height = 180
-    screenwidth = root.winfo_screenwidth()
-    screenheight = root.winfo_screenheight()
+    screenwidth = Expensewindow.winfo_screenwidth()
+    screenheight = Expensewindow.winfo_screenheight()
     alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
                                 (screenheight - height) / 2)
     Expensewindow.geometry(alignstr)
@@ -78,14 +77,14 @@ def Income():  # Function for Income button command
 
     def Submit_Income():  # Fuction that saves the inputed data in csv file
 
-        # Get imput data from user
+        #  Get imput data from user
         EnteredDate = (Ical.get())
         EnteredIncome = float((IncomeEntry.get()))
         EnteredCategory = CategorySelection.get()
 
-        #  import CSV file to dataframe
+#  import CSV file to dataframe
         Tdf = pd.read_csv('Transactions.csv')
-        Tdf = Tdf.fillna(0)
+        #  Tdf = Tdf.fillna(0)
         print(Tdf)
         IncomeTdf = Tdf[Tdf['Date'] == EnteredDate]
         IncomeTdf = IncomeTdf[EnteredCategory]
@@ -95,18 +94,18 @@ def Income():  # Function for Income button command
             if EnteredIncome >= 0:
                 IncomeTdf = IncomeTdf + EnteredIncome
                 Tdf.update(IncomeTdf)
-                print(Tdf)
+#  save to the csv file
                 Tdf.to_csv('Transactions.csv', index=False)
                 Incomewindow.destroy()
 
         else:
             print("no")
-    # %% Income window properties
+# %% Income window properties
     Incomewindow = Toplevel()
     width = 300
     height = 180
-    screenwidth = root.winfo_screenwidth()
-    screenheight = root.winfo_screenheight()
+    screenwidth = Incomewindow.winfo_screenwidth()
+    screenheight = Incomewindow.winfo_screenheight()
     alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
                                 (screenheight - height) / 2)
     Incomewindow.geometry(alignstr)
@@ -139,26 +138,27 @@ def Income():  # Function for Income button command
 
 
 # %% Root Window
-root = Tk()
-root.title('Transaction')
-width = 500
-height = 300
-screenwidth = root.winfo_screenwidth()
-screenheight = root.winfo_screenheight()
-alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
-                            (screenheight - height) / 2)
-root.geometry(alignstr)
-root.resizable(width=False, height=False)
-frame = Frame(root)
-frame.pack()
+def StartWindow():
+    root = Tk()
+    root.title('Transaction')
+    width = 500
+    height = 300
+    screenwidth = root.winfo_screenwidth()
+    screenheight = root.winfo_screenheight()
+    alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
+                                (screenheight - height) / 2)
+    root.geometry(alignstr)
+    root.resizable(width=False, height=False)
+    frame = Frame(root)
+    frame.pack()
 
-# %% Expense button
-Button_Expense = Button(frame, text="Add Expense", command=Expense)
-Button_Expense.pack(padx=5, pady=5, side="left")
+    # %% Expense button
+    Button_Expense = Button(frame, text="Add Expense", command=Expense)
+    Button_Expense.pack(padx=5, pady=5, side="left")
 
-# %% Income Button
-Button_Income = Button(frame, text="Add Income", command=Income)
-Button_Income.pack(padx=5, pady=5, side="left")
+    # %% Income Button
+    Button_Income = Button(frame, text="Add Income", command=Income)
+    Button_Income.pack(padx=5, pady=5, side="left")
 
-# %% Main loop
-root.mainloop()
+    # %% Main loop
+    root.mainloop()
