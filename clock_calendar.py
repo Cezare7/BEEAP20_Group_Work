@@ -10,11 +10,12 @@ import numpy as np
 import tkcalendar as tkcal
 import calendar as calendar
 import time            
+import requests, base64
 
 
 #create a tk window to show the date and time 
 window = tk.Tk()
-window.geometry("300x350")
+window.geometry("350x400")
 window.title("calendar") 
 
 # create a 24hr digital clock face
@@ -36,6 +37,5 @@ update_clock()
 mycal = tkcal.Calendar(window, setmode='day', date_pattern='d/m/yy')
 mycal.pack(padx=10, pady=1)
 
- 
+
 window.mainloop()
-#https://www.youtube.com/watch?v=cd4bApAhEIM
