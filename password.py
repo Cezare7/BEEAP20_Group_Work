@@ -6,7 +6,7 @@ Created on Mon Apr 26 12:24:50 2021
 """
 import tkinter.messagebox as tkBox
 from tkinter import Tk, Frame, Entry, Button, Toplevel, Label
-from Transactions import StartWindow 
+from Transactions import StartWindow
 
 
 def Sign_up():

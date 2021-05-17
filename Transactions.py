@@ -7,6 +7,7 @@ Created on Tue May 11 10:00:50 2021
 from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk
 from tkcalendar import DateEntry
 import pandas as pd
+from GetBalance import BalanceSum
 
 
 # %% Expense button command
@@ -32,6 +33,7 @@ def Expense():  # Input expense and submit it to the csv file
                 Tdf.update(DateTdf)
                 Tdf.to_csv('Transactions.csv', index=False)
                 Expensewindow.destroy()
+
         else:
             print("no")
 # %% Expense window properties
@@ -85,7 +87,7 @@ def Income():  # Function for Income button command
 #  import CSV file to dataframe
         Tdf = pd.read_csv('Transactions.csv')
         #  Tdf = Tdf.fillna(0)
-        print(Tdf)
+        # print(Tdf)
         IncomeTdf = Tdf[Tdf['Date'] == EnteredDate]
         IncomeTdf = IncomeTdf[EnteredCategory]
 
@@ -97,6 +99,7 @@ def Income():  # Function for Income button command
 #  save to the csv file
                 Tdf.to_csv('Transactions.csv', index=False)
                 Incomewindow.destroy()
+                BalanceSum()
 
         else:
             print("no")
@@ -139,6 +142,7 @@ def Income():  # Function for Income button command
 
 # %% Root Window
 def StartWindow():
+
     root = Tk()
     root.title('Transaction')
     width = 500
@@ -154,11 +158,19 @@ def StartWindow():
 
     # %% Expense button
     Button_Expense = Button(frame, text="Add Expense", command=Expense)
-    Button_Expense.pack(padx=5, pady=5, side="left")
+    Button_Expense.pack(padx=5, pady=5, side="right")
 
     # %% Income Button
     Button_Income = Button(frame, text="Add Income", command=Income)
-    Button_Income.pack(padx=5, pady=5, side="left")
+    Button_Income.pack(padx=5, pady=5, side="right")
+
+    # %% Balance Lable
+    Tdf = pd.read_csv('Transactions.csv')
+    Balance = Tdf['Balance'].sum()
+    Lable_Balance = Label(frame, text=Balance)
+    Lable_Balance.pack(padx=5, pady=5, side="right")
+    Lable_Balance = Label(frame, text="Balance: ")
+    Lable_Balance.pack(padx=5, pady=5, side="right")
 
     # %% Main loop
     root.mainloop()
