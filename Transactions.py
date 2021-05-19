@@ -173,10 +173,11 @@ def StartWindow():
     Tdf = pd.read_csv('Transactions.csv')
     Balance = Tdf['Balance'].sum()
     Lable_Balance = Label(root, text=Balance, font='Helvetica 30 bold')
-    Lable_Balance.place(x=230, y=30)
+    Lable_Balance.place(x=220, y=30)
     Lable_Balancet = Label(root, text="Balance: ")
     Lable_Balancet.place(x=280, y=13)
 
+    # %% Weather Label
     Lable_Temperature = Label(root, text=Temperature)
     Lable_Temperature.place(x=10, y=200)
     Lable_Wind = Label(root, text=WindSpeed)

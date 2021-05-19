@@ -25,7 +25,11 @@ def main():
                             print("\tMax Temp", sub2elem.tag, ":", sub2elem.attrib['max'])
                         if sub2elem.tag == "humidity":
                             print("\tHumid:", sub2elem.attrib['value'], sub2elem.attrib['unit'])
+<<<<<<< HEAD
 
+=======
+main()
+>>>>>>> 83b8bae85bc2cbaa01e29b124a6771a9a734453c
 #%%
 import tkinter as tk
 import requests
