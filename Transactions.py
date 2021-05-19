@@ -4,7 +4,7 @@ Created on Mon May 17 13:03:40 2021
 
 @author: Beni Fucking Demoa
 """
-from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk
+from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk, Menu
 from tkcalendar import DateEntry
 import pandas as pd
 from GetBalance import BalanceSum
@@ -163,6 +163,15 @@ def StartWindow():
         plt.ylabel('Euro')
         ax1.set(xticklabels=[])
 
+# %% Time and date
+    def update_clock():
+        hours = time.strftime('%H')
+        minutes = time.strftime('%M')
+        #  am_or_pm = time.strftime('%p')
+        time_text = hours + ':' + minutes
+        digital_clock_lbl.config(text=time_text)
+        digital_clock_lbl.after(1000, update_clock)
+# %% Base Window
     root = Tk()
     root.title('Transaction')
     width = 650
@@ -206,18 +215,11 @@ def StartWindow():
     Lable_Weather = Label(root, text=Weather)
     Lable_Weather.place(x=25+Mx, y=360+My)
 
-    # %% Time and date
-    def update_clock():
-        hours = time.strftime('%H')
-        minutes = time.strftime('%M')
-        #  am_or_pm = time.strftime('%p')
-        time_text = hours + ':' + minutes
-        digital_clock_lbl.config(text=time_text)
-        digital_clock_lbl.after(1000, update_clock)
+# %% time and date lables
 
     digital_clock_lbl = Label(root, text='00:00',
                               font='Helvetica 30 bold')
-    digital_clock_lbl.place(x=15, y=35)
+    digital_clock_lbl.place(x=25, y=35)
 
     update_clock()
 
@@ -225,7 +227,7 @@ def StartWindow():
     Date = ts.strftime('%A'' ' '%d''/''%m''/''%Y')
 
     Lable_Date = Label(root, text=Date)
-    Lable_Date.place(x=10, y=15)
+    Lable_Date.place(x=25, y=15)
 
     # %% Start and end date for graph
     Startcal = DateEntry(root, width=20,
@@ -244,10 +246,21 @@ def StartWindow():
                        date_pattern='d.m.yyyy',
                        justify="center")
     Endcal.place(x=25, y=125)
+
     # %% Button for Graph and start graph at run
     Button_Expense = Button(root, text="Set Dates", command=Graph)
     Button_Expense.place(x=25, y=150, width=143)
     Graph()
+
+# %% MainMenu
+    mainmenu = Menu(root)
+
+    filemenu = Menu(mainmenu, tearoff=0)
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=root.destroy)
+    mainmenu.add_cascade(label="File", menu=filemenu)
+
+    root.config(menu=mainmenu)
     # %% Main loop
     root.mainloop()
 

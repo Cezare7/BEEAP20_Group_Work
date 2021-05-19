@@ -1,11 +1,10 @@
-
 # -*- coding: utf-8 -*-
 """
 Created on Mon May 17 13:03:40 2021
 
 @author: Beni Fucking Demoa
 """
-from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk
+from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk, Menu
 from tkcalendar import DateEntry
 import pandas as pd
 from GetBalance import BalanceSum
@@ -148,7 +147,23 @@ def StartWindow():
                                command=Submit_Income)
         ISubmitButton.pack(padx=5, pady=5)
 
-    # %% Time and date
+# %% Graph
+    def Graph():
+        Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
+        StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
+        EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values
+        TdfDate = (Tdf.iloc[int(StartDate[0]):int(EndDate[-1])+1, ])
+        GraphBalance = TdfDate["Balance"]
+        figure1 = plt.figure(dpi=50)
+        ax1 = figure1.add_subplot(111)
+        bar1 = FigureCanvasTkAgg(figure1, root)
+        bar1.get_tk_widget().place(x=300, y=130, width=330, height=255)
+        GraphBalance.plot.bar(ax=ax1)
+        ax1.set_title("Balance")
+        plt.ylabel('Euro')
+        ax1.set(xticklabels=[])
+
+# %% Time and date
     def update_clock():
         hours = time.strftime('%H')
         minutes = time.strftime('%M')
@@ -156,7 +171,7 @@ def StartWindow():
         time_text = hours + ':' + minutes
         digital_clock_lbl.config(text=time_text)
         digital_clock_lbl.after(1000, update_clock)
-
+# %% Base Window
     root = Tk()
     root.title('Transaction')
     width = 650
@@ -185,8 +200,10 @@ def StartWindow():
     Balance = round(Tdf['Balance'].sum(), 2)
     Lable_Balance = Label(root, text=Balance, font='Helvetica 30 bold')
     Lable_Balance.place(x=320, y=30)
-    Lable_Balancet = Label(root, text="Balance ")
+    Lable_Balancet = Label(root, text="Balance: ")
     Lable_Balancet.place(x=350, y=13)
+
+    # %% Weather Label
     Mx = 0
     My = -25
     Lable_Temperature = Label(root, text=Temperature)
@@ -198,19 +215,22 @@ def StartWindow():
     Lable_Weather = Label(root, text=Weather)
     Lable_Weather.place(x=25+Mx, y=360+My)
 
-    # %% Time And Date Label
+# %% time and date lables
+
+
     digital_clock_lbl = Label(root, text='00:00',
                               font='Helvetica 30 bold')
     digital_clock_lbl.place(x=25, y=35)
 
     update_clock()
+
     ts = dt.datetime.now()
     Date = ts.strftime('%A'' ' '%d''/''%m''/''%Y')
 
     Lable_Date = Label(root, text=Date)
     Lable_Date.place(x=25, y=15)
 
-    # %% Date Entery for Graph
+    # %% Start and end date for graph
     Startcal = DateEntry(root, width=20,
                          background='darkblue',
                          foreground='white',
@@ -227,26 +247,20 @@ def StartWindow():
                        date_pattern='d.m.yyyy',
                        justify="center")
     Endcal.place(x=25, y=125)
-
-    # %% Graph
-    def Graph():
-        Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
-        StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
-        EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values
-        TdfDate = (Tdf.iloc[int(StartDate[0]):int(EndDate[-1])+1, ])
-        GraphBalance = TdfDate["Balance"]
-        figure1 = plt.figure(dpi=50)
-        ax1 = figure1.add_subplot(111)
-        bar1 = FigureCanvasTkAgg(figure1, root)
-        bar1.get_tk_widget().place(x=300, y=130, width=330, height=255)
-        GraphBalance.plot.bar(ax=ax1)
-        ax1.set_title("Balance")
-        plt.ylabel('Euro')
-        ax1.set(xticklabels=[])
-
+    # %% Button for Graph and start graph at run
     Button_Expense = Button(root, text="Set Dates", command=Graph)
     Button_Expense.place(x=25, y=150, width=143)
     Graph()
+    
+# %% Main Menu
+    mainmenu = Menu(root)
+
+    filemenu = Menu(mainmenu, tearoff=0)
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=root.destroy)
+    mainmenu.add_cascade(label="File", menu=filemenu)
+
+    root.config(menu=mainmenu)
     # %% Main loop
     root.mainloop()
 
