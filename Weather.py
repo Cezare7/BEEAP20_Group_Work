@@ -28,15 +28,15 @@ def print_weather(result, city):
 
 def main():
     city = 'Tampere'
-    print()
+
     try:
         query = 'q='+city
         w_data = weather_data(query)
-        print_weather(w_data, city)
-        print()
+        print_weather(w_data, city) 
+         
+
     except:
         print('City name not found...')
 
-
-if __name__ == '__main__':
-    main()
+main()
+print(Temperature)

@@ -77,10 +77,10 @@ def Log_in():
 
         Username_Index = (Usernames.index(Username.get()))
 
-        print(Username_Index)
-        print(Entered_Username)
-        print(Entered_Password)
-        print(Passwords[Username_Index])
+        # print(Username_Index)
+        # print(Entered_Username)
+        # print(Entered_Password)
+        # print(Passwords[Username_Index])
 
         if Entered_Password == (Passwords[Username_Index]):
             tkBox.showinfo('Welcome', "Welcome!")
@@ -129,6 +129,6 @@ Button_SignUp.pack(padx=5, pady=5, side="right")
 
 Usernames = ["Jack", "Benjamin", "123"]
 Passwords = ["Enter", "Qwerty", "123"]
-Weathers = ["Valkeakoski"]
+Weathers = ["Valkeakoski", 'Tampere']
 
 LogInWindow.mainloop()
