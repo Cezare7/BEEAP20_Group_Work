@@ -158,33 +158,32 @@ def StartWindow():
     frame.pack()
 
     # %% Expense button
-    Button_Expense = Button(frame, text="Add Expense", command=Expense)
-    Button_Expense.place(x=10, y=10)
+    Button_Expense = Button(root, text="Add Expense", command=Expense)
+    Button_Expense.place(x=400, y=15)
 
     # %% Income Button
-
-    Button_Income = Button(frame,
-                           text="Add Income",
+    Button_Income = Button(root,
+                           text="Add Income ",
                            command=Income)
-    Button_Income.pack(padx=5, pady=5, side="right")
-
+    Button_Income.place(x=400, y=45)
     # %% Balance Lable
-
+    
     Tdf = pd.read_csv('Transactions.csv')
     Balance = Tdf['Balance'].sum()
-    Lable_Balance = Label(frame, text=Balance)
-    Lable_Balance.pack(padx=5, pady=5, side="right")
-    Lable_Balancet = Label(frame, text="Balance: ")
-    Lable_Balancet.pack(padx=5, pady=5, side="right")
+    Lable_Balance = Label(root, text=Balance)
+    Lable_Balance.place(x=340, y=15)
+    Lable_Balancet = Label(root, text="Balance: ")
+    Lable_Balancet.place(x=280, y=15)
 
-    Lable_Temperature = Label(frame, text=Temperature)
-    Lable_Temperature.pack(padx=5, pady=5, side="bottom")
-    Lable_Wind = Label(frame, text=WindSpeed)
-    Lable_Wind.pack(padx=5, pady=5, side="bottom")
-    Lable_Discription = Label(frame, text=Discription)
-    Lable_Discription.pack(padx=5, pady=5, side="bottom")
-    Lable_Weather = Label(frame, text=Weather)
-    Lable_Weather.pack(padx=5, pady=5, side="bottom")
+    Lable_Temperature = Label(root, text=Temperature)
+    Lable_Temperature.place(x=10, y=200)
+    Lable_Wind = Label(root, text=WindSpeed)
+    Lable_Wind.place(x=10, y=220)
+    Lable_Discription = Label(root, text=Discription)
+    Lable_Discription.place(x=10, y=240)
+    Lable_Weather = Label(root, text=Weather)
+    Lable_Weather.place(x=10, y=260)
+    
     # %% Main loop
     root.mainloop()
 

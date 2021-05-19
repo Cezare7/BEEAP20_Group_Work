@@ -19,7 +19,7 @@ def BalanceSum():
                                           + col['Other bussiness']))
     Balance = Tdf['Balance'].sum()
     Tdf.to_csv('Transactions.csv', index=False)
-    print(Balance)
+
 
 
 BalanceSum()

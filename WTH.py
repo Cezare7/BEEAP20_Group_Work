@@ -16,8 +16,8 @@ res = res.json()
 city = 'Tampere'
 Temperature = ("{}'s temperature:\t {}°C ".
                format(city, res['main']['temp']))
-WindSpeed = ("Wind speed:\t\t\t\t {} m/s".
+WindSpeed = ("Wind speed:\t\t {} m/s".
              format(res['wind']['speed']))
-Discription = ("Description:\t\t\t {}".
+Discription = ("Description:\t\t {}".
                format(res['weather'][0]['description']))
-Weather = ("Weather:\t\t\t\t {}". format(res['weather'][0]['main']))
+Weather = ("Weather:\t\t\t {}". format(res['weather'][0]['main']))
