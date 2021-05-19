@@ -9,6 +9,8 @@ from tkcalendar import DateEntry
 import pandas as pd
 from GetBalance import BalanceSum
 from WTH import *
+import time
+import datetime as dt
 
 
 def StartWindow():
@@ -167,13 +169,13 @@ def StartWindow():
                            command=Income)
     Button_Income.place(x=400, y=45)
     # %% Balance Lable
-    
+
     Tdf = pd.read_csv('Transactions.csv')
     Balance = Tdf['Balance'].sum()
-    Lable_Balance = Label(root, text=Balance)
-    Lable_Balance.place(x=340, y=15)
+    Lable_Balance = Label(root, text=Balance, font='Helvetica 30 bold')
+    Lable_Balance.place(x=230, y=30)
     Lable_Balancet = Label(root, text="Balance: ")
-    Lable_Balancet.place(x=280, y=15)
+    Lable_Balancet.place(x=280, y=13)
 
     Lable_Temperature = Label(root, text=Temperature)
     Lable_Temperature.place(x=10, y=200)
@@ -183,7 +185,28 @@ def StartWindow():
     Lable_Discription.place(x=10, y=240)
     Lable_Weather = Label(root, text=Weather)
     Lable_Weather.place(x=10, y=260)
-    
+
+    # %% Time and date
+    def update_clock():
+        hours = time.strftime('%H')
+        minutes = time.strftime('%M')
+        #  am_or_pm = time.strftime('%p')
+        time_text = hours + ':' + minutes
+        digital_clock_lbl.config(text=time_text)
+        digital_clock_lbl.after(1000, update_clock)
+
+    digital_clock_lbl = Label(root, text='00:00',
+                              font='Helvetica 30 bold')
+    digital_clock_lbl.place(x=15, y=35)
+
+    update_clock()
+
+    ts = dt.datetime.now()
+    Date = ts.strftime('%A'' ' '%d''/''%m''/''%Y')
+
+    Lable_Date = Label(root, text=Date)
+    Lable_Date.place(x=10, y=15)
+
     # %% Main loop
     root.mainloop()
 
