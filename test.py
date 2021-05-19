@@ -216,7 +216,7 @@ def StartWindow():
                          borderwidth=2,
                          date_pattern='d.m.yyyy',
                          justify="center",
-                         year=2021, month=5, day=1)
+                         year=2021, month=5, day=2)
     Startcal.place(x=180, y=90)
 
     Endcal = DateEntry(root, width=20,
@@ -227,11 +227,17 @@ def StartWindow():
                        justify="center")
     Endcal.place(x=335, y=90)
 
-    #GrafTdf = (Tdf["Date"] > Startcal.get()) and (Tdf['Date'] <= Endcal.get())
+    Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
+    StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
+    EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values 
+    #GrafTdf = (Tdf["Date"] > StartDate)
+    #and (Tdf['Date'] <= EndDate)
     #GrafTdf = (Tdf["Date"] >= Startcal.get())
-    GrafTdf = (Endcal.get() > Tdf['Date']  )
-    test = Tdf.loc[GrafTdf]
-    print(Endcal.get())
+    #GrafTdf = (Endcal.get() < Tdf["Date"]  )
+    #test = Tdf.loc[GrafTdf]
+    print(type(StartDate))
+    #print(Tdf.iloc[StartDate:5,])
+
     '''GrafTdf = Tdf[[Startcal.get(), Endcal.get()]]
     BalanceTdf = GrafTdf["Balance"]
     figure1 = plt.figure(dpi=50)
