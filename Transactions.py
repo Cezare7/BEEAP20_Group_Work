@@ -11,7 +11,8 @@ from GetBalance import BalanceSum
 from WTH import *
 import time
 import datetime as dt
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
 
 def StartWindow():
 
@@ -146,10 +147,26 @@ def StartWindow():
                                command=Submit_Income)
         ISubmitButton.pack(padx=5, pady=5)
 
+# %% Graph
+    def Graph():
+        Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
+        StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
+        EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values
+        TdfDate = (Tdf.iloc[int(StartDate[0]):int(EndDate[-1])+1, ])
+        GraphBalance = TdfDate["Balance"]
+        figure1 = plt.figure(dpi=50)
+        ax1 = figure1.add_subplot(111)
+        bar1 = FigureCanvasTkAgg(figure1, root)
+        bar1.get_tk_widget().place(x=300, y=130, width=330, height=255)
+        GraphBalance.plot.bar(ax=ax1)
+        ax1.set_title("Balance")
+        plt.ylabel('Euro')
+        ax1.set(xticklabels=[])
+
     root = Tk()
     root.title('Transaction')
-    width = 500
-    height = 300
+    width = 650
+    height = 400
     screenwidth = root.winfo_screenwidth()
     screenheight = root.winfo_screenheight()
     alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
@@ -161,31 +178,33 @@ def StartWindow():
 
     # %% Expense button
     Button_Expense = Button(root, text="Add Expense", command=Expense)
-    Button_Expense.place(x=400, y=15)
+    Button_Expense.place(x=550, y=15)
 
     # %% Income Button
     Button_Income = Button(root,
                            text="Add Income ",
                            command=Income)
-    Button_Income.place(x=400, y=45)
+    Button_Income.place(x=550, y=45)
     # %% Balance Lable
 
     Tdf = pd.read_csv('Transactions.csv')
-    Balance = Tdf['Balance'].sum()
+    Balance = round(Tdf['Balance'].sum(), 2)
     Lable_Balance = Label(root, text=Balance, font='Helvetica 30 bold')
-    Lable_Balance.place(x=220, y=30)
+    Lable_Balance.place(x=320, y=30)
     Lable_Balancet = Label(root, text="Balance: ")
-    Lable_Balancet.place(x=280, y=13)
+    Lable_Balancet.place(x=350, y=13)
 
     # %% Weather Label
+    Mx = 0
+    My = -25
     Lable_Temperature = Label(root, text=Temperature)
-    Lable_Temperature.place(x=10, y=200)
+    Lable_Temperature.place(x=25+Mx, y=300+My)
     Lable_Wind = Label(root, text=WindSpeed)
-    Lable_Wind.place(x=10, y=220)
+    Lable_Wind.place(x=25+Mx, y=320+My)
     Lable_Discription = Label(root, text=Discription)
-    Lable_Discription.place(x=10, y=240)
+    Lable_Discription.place(x=25+Mx, y=340+My)
     Lable_Weather = Label(root, text=Weather)
-    Lable_Weather.place(x=10, y=260)
+    Lable_Weather.place(x=25+Mx, y=360+My)
 
     # %% Time and date
     def update_clock():
@@ -208,6 +227,27 @@ def StartWindow():
     Lable_Date = Label(root, text=Date)
     Lable_Date.place(x=10, y=15)
 
+    # %% Start and end date for graph
+    Startcal = DateEntry(root, width=20,
+                         background='darkblue',
+                         foreground='white',
+                         borderwidth=2,
+                         date_pattern='d.m.yyyy',
+                         justify="center",
+                         year=2021, month=5, day=2)
+    Startcal.place(x=25, y=100)
+
+    Endcal = DateEntry(root, width=20,
+                       background='darkblue',
+                       foreground='white',
+                       borderwidth=2,
+                       date_pattern='d.m.yyyy',
+                       justify="center")
+    Endcal.place(x=25, y=125)
+    # %% Button for Graph and start graph at run
+    Button_Expense = Button(root, text="Set Dates", command=Graph)
+    Button_Expense.place(x=25, y=150, width=143)
+    Graph()
     # %% Main loop
     root.mainloop()
 

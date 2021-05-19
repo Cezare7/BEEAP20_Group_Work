@@ -159,8 +159,8 @@ def StartWindow():
 
     root = Tk()
     root.title('Transaction')
-    width = 500
-    height = 300
+    width = 650
+    height = 400
     screenwidth = root.winfo_screenwidth()
     screenheight = root.winfo_screenheight()
     alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
@@ -172,42 +172,43 @@ def StartWindow():
 
     # %% Expense button
     Button_Expense = Button(root, text="Add Expense", command=Expense)
-    Button_Expense.place(x=400, y=15)
+    Button_Expense.place(x=550, y=15)
 
     # %% Income Button
     Button_Income = Button(root,
                            text="Add Income ",
                            command=Income)
-    Button_Income.place(x=400, y=45)
+    Button_Income.place(x=550, y=45)
     # %% Balance Lable
 
     Tdf = pd.read_csv('Transactions.csv')
-    Balance = Tdf['Balance'].sum()
+    Balance = round(Tdf['Balance'].sum(), 2)
     Lable_Balance = Label(root, text=Balance, font='Helvetica 30 bold')
-    Lable_Balance.place(x=220, y=30)
-    Lable_Balancet = Label(root, text="Balance: ")
-    Lable_Balancet.place(x=280, y=13)
-
+    Lable_Balance.place(x=320, y=30)
+    Lable_Balancet = Label(root, text="Balance ")
+    Lable_Balancet.place(x=350, y=13)
+    Mx = 0
+    My = -25
     Lable_Temperature = Label(root, text=Temperature)
-    Lable_Temperature.place(x=10, y=200)
+    Lable_Temperature.place(x=25+Mx, y=300+My)
     Lable_Wind = Label(root, text=WindSpeed)
-    Lable_Wind.place(x=10, y=220)
+    Lable_Wind.place(x=25+Mx, y=320+My)
     Lable_Discription = Label(root, text=Discription)
-    Lable_Discription.place(x=10, y=240)
+    Lable_Discription.place(x=25+Mx, y=340+My)
     Lable_Weather = Label(root, text=Weather)
-    Lable_Weather.place(x=10, y=260)
+    Lable_Weather.place(x=25+Mx, y=360+My)
 
     # %% Time And Date Label
     digital_clock_lbl = Label(root, text='00:00',
                               font='Helvetica 30 bold')
-    digital_clock_lbl.place(x=15, y=35)
+    digital_clock_lbl.place(x=25, y=35)
 
     update_clock()
     ts = dt.datetime.now()
     Date = ts.strftime('%A'' ' '%d''/''%m''/''%Y')
 
     Lable_Date = Label(root, text=Date)
-    Lable_Date.place(x=10, y=15)
+    Lable_Date.place(x=25, y=15)
 
     # %% Date Entery for Graph
     Startcal = DateEntry(root, width=20,
@@ -217,7 +218,7 @@ def StartWindow():
                          date_pattern='d.m.yyyy',
                          justify="center",
                          year=2021, month=5, day=2)
-    Startcal.place(x=180, y=90)
+    Startcal.place(x=25, y=100)
 
     Endcal = DateEntry(root, width=20,
                        background='darkblue',
@@ -225,27 +226,27 @@ def StartWindow():
                        borderwidth=2,
                        date_pattern='d.m.yyyy',
                        justify="center")
-    Endcal.place(x=335, y=90)
+    Endcal.place(x=25, y=125)
 
-    Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
-    StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
-    EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values 
-    #GrafTdf = (Tdf["Date"] > StartDate)
-    #and (Tdf['Date'] <= EndDate)
-    #GrafTdf = (Tdf["Date"] >= Startcal.get())
-    #GrafTdf = (Endcal.get() < Tdf["Date"]  )
-    #test = Tdf.loc[GrafTdf]
-    print(type(StartDate))
-    #print(Tdf.iloc[StartDate:5,])
+    # %% Graph
+    def Graph():
+        Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
+        StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
+        EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values
+        TdfDate = (Tdf.iloc[int(StartDate[0]):int(EndDate[-1])+1, ])
+        GraphBalance = TdfDate["Balance"]
+        figure1 = plt.figure(dpi=50)
+        ax1 = figure1.add_subplot(111)
+        bar1 = FigureCanvasTkAgg(figure1, root)
+        bar1.get_tk_widget().place(x=300, y=130, width=330, height=255)
+        GraphBalance.plot.bar(ax=ax1)
+        ax1.set_title("Balance")
+        plt.ylabel('Euro')
+        ax1.set(xticklabels=[])
 
-    '''GrafTdf = Tdf[[Startcal.get(), Endcal.get()]]
-    BalanceTdf = GrafTdf["Balance"]
-    figure1 = plt.figure(dpi=50)
-    ax1 = figure1.add_subplot(111)
-    bar1 = FigureCanvasTkAgg(figure1, root)
-    bar1.get_tk_widget().place(x=50, y=130, width=250, height=155)
-    #GrafTdf.plot.bar(ax=ax1)
-    print(BalanceTdf)'''
+    Button_Expense = Button(root, text="Set Dates", command=Graph)
+    Button_Expense.place(x=25, y=150, width=143)
+    Graph()
     # %% Main loop
     root.mainloop()
 
