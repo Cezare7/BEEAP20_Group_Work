@@ -4,7 +4,7 @@ Created on Mon May 17 13:03:40 2021
 
 @author: Beni Fucking Demoa
 """
-from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk, Menu
+from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk, Menu, StringVar
 from tkcalendar import DateEntry
 import pandas as pd
 from GetBalance import BalanceSum
@@ -37,9 +37,7 @@ def StartWindow():
                     DateTdf = DateTdf + (EnteredExpense * -1)
                     Tdf.update(DateTdf)
                     Tdf.to_csv('Transactions.csv', index=False)
-                    root.destroy()
-                    BalanceSum()
-                    StartWindow()
+                    Balance.set(round(BalanceSum(), 2))
                     Expensewindow.destroy()
             else:
                 print("no")
@@ -104,9 +102,7 @@ def StartWindow():
                     Tdf.update(IncomeTdf)
     #  save to the csv file
                     Tdf.to_csv('Transactions.csv', index=False)
-                    root.destroy()
-                    BalanceSum()
-                    StartWindow()
+                    Balance.set(round(BalanceSum(), 2))
                     Incomewindow.destroy()
 
             else:
@@ -197,11 +193,12 @@ def StartWindow():
     # %% Balance Lable
 
     Tdf = pd.read_csv('Transactions.csv')
-    Balance = round(Tdf['Balance'].sum(), 2)
-    Lable_Balance = Label(root, text=Balance, font='Helvetica 30 bold')
+    Balance = StringVar()
+    Lable_Balance = Label(root, textvariable=Balance, font='Helvetica 30 bold')
     Lable_Balance.place(x=320, y=30)
     Lable_Balancet = Label(root, text="Balance: ")
     Lable_Balancet.place(x=350, y=13)
+    Balance.set(round(Tdf['Balance'].sum(), 2))
 
     # %% Weather Label
     Mx = 0
@@ -270,4 +267,4 @@ def StartWindow():
     root.mainloop()
 
 
-#  StartWindow()
+StartWindow()
