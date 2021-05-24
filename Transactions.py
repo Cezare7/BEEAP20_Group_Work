@@ -4,10 +4,7 @@ Created on Mon May 17 13:03:40 2021
 
 @author: Beni Fucking Demoa
 """
-
-from tkinter import Tk, Frame, Entry, Button
-from tkinter import Toplevel, Label, ttk, Menu, StringVar
-
+from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk, Menu, StringVar
 from tkcalendar import DateEntry
 import pandas as pd
 from GetBalance import BalanceSum
@@ -16,7 +13,6 @@ import time
 import datetime as dt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
-
 
 def StartWindow():
 
@@ -149,7 +145,6 @@ def StartWindow():
 
 # %% Graph
     def Graph():
-
         Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
         StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
         EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values
@@ -157,10 +152,10 @@ def StartWindow():
         GraphBalance = TdfDate["Balance"]
         figure1 = plt.figure(dpi=50)
         ax1 = figure1.add_subplot(111)
-        Plot1 = FigureCanvasTkAgg(figure1, root)
-        Plot1.get_tk_widget().place(x=300, y=130, width=330, height=255)
+        bar1 = FigureCanvasTkAgg(figure1, root)
+        bar1.get_tk_widget().place(x=300, y=130, width=330, height=255)
         GraphBalance.plot.bar(ax=ax1)
-        ax1.set_title("Change in net worht")
+        ax1.set_title("Balance")
         plt.ylabel('Euro')
         ax1.set(xticklabels=[])
 
@@ -238,7 +233,7 @@ def StartWindow():
                          borderwidth=2,
                          date_pattern='d.m.yyyy',
                          justify="center",
-                         year=2021, month=5, day=1)
+                         year=2021, month=5, day=2)
     Startcal.place(x=25, y=100)
 
     Endcal = DateEntry(root, width=20,
@@ -252,14 +247,14 @@ def StartWindow():
     # %% Button for Graph and start graph at run
     Button_Expense = Button(root, text="Set Dates", command=Graph)
     Button_Expense.place(x=25, y=150, width=143)
-
+    Graph()
 
 # %% MainMenu
     def login():
         from password import Start
 
     mainmenu = Menu(root)
-
+    
     filemenu = Menu(mainmenu, tearoff=0)
     filemenu.add_command(label="Logout", command=lambda: [root.destroy(),
                                                           login()])
@@ -270,3 +265,6 @@ def StartWindow():
     root.config(menu=mainmenu)
     # %% Main loop
     root.mainloop()
+
+
+StartWindow()
