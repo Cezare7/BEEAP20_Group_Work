@@ -4,12 +4,10 @@ Created on Mon May 17 13:03:40 2021
 
 @author: Beni Fucking Demoa
 """
-<<<<<<< HEAD
+
 from tkinter import Tk, Frame, Entry, Button
 from tkinter import Toplevel, Label, ttk, Menu, StringVar
-=======
-from tkinter import Tk, Frame, Entry, Button, Toplevel, Label, ttk, Menu, StringVar
->>>>>>> f3ab0c348cefee3f2fc970a5eec2b291abaffc25
+
 from tkcalendar import DateEntry
 import pandas as pd
 from GetBalance import BalanceSum
@@ -109,10 +107,6 @@ def StartWindow():
     #  save to the csv file
                     Tdf.to_csv('Transactions.csv', index=False)
                     Balance.set(round(BalanceSum(), 2))
-<<<<<<< HEAD
-                    Graph()
-=======
->>>>>>> f3ab0c348cefee3f2fc970a5eec2b291abaffc25
                     Incomewindow.destroy()
 
             else:
@@ -155,7 +149,7 @@ def StartWindow():
 
 # %% Graph
     def Graph():
-        plt.ion()
+
         Tdf["Date"] = pd.to_datetime(Tdf['Date'], infer_datetime_format=True)
         StartDate = Tdf[Tdf['Date'] == Startcal.get()].index.values
         EndDate = Tdf[Tdf['Date'] == Endcal.get()].index.values
@@ -169,8 +163,6 @@ def StartWindow():
         ax1.set_title("Change in net worht")
         plt.ylabel('Euro')
         ax1.set(xticklabels=[])
-        figure1.canvas.draw()
-        figure1.canvas.flush_events()
 
 # %% Time and date
     def update_clock():
@@ -278,9 +270,3 @@ def StartWindow():
     root.config(menu=mainmenu)
     # %% Main loop
     root.mainloop()
-<<<<<<< HEAD
-=======
-
-
-StartWindow()
->>>>>>> f3ab0c348cefee3f2fc970a5eec2b291abaffc25

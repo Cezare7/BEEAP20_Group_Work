@@ -20,10 +20,6 @@ def BalanceSum():
                                           + col['Other bussiness']))
     Tdf.to_csv('Transactions.csv', index=False)
     return Tdf['Balance'].sum()
-<<<<<<< HEAD
-=======
-
->>>>>>> f3ab0c348cefee3f2fc970a5eec2b291abaffc25
 
 
 BalanceSum()
